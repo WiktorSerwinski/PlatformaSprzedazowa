@@ -10,200 +10,179 @@ namespace API.Data
 
             var products=new List<Product>
             {
+                 		new Product
+                {
+                    Name = "Buty do biegania",
+                    Description =
+                        "Nasze lekkie buty do biegania nie tylko dostarczą Ci prędkości, ale także zapewnią stabilność i ochronę przed urazami, sprawiając, że każdy trening stanie się przyjemnością.",
+                    Price = 20000,
+                    PictureUrl = "/images/products/running_shoes.png",
+                    Brand = "Moda",
+                    Type = "Sport",
+                    QuantityInStock = 100
+                },
                 		new Product
                 {
-                    Name = "Angular Speedster Board 2000",
+                    Name = "Kurtka",
                     Description =
-                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                        "Niezależnie od warunków atmosferycznych, nasza kurtka sportowa utrzyma Cię w cieple i suchym komforcie. Projektowana z myślą o najnowszych trendach mody sportowej, to niezbędny element Twojej garderoby podczas aktywnego trybu życia.",
+                    Price = 60000,
+                    PictureUrl = "/images/products/jacket.png",
+                    Brand = "Moda",
+                    Type = "Sport",
+                    QuantityInStock = 100
+                },
+                		new Product
+                {
+                    Name = "Buty na Obcasie",
+                    Description =
+                        "Nasze buty na obcasie to nie tylko wyraz klasy, ale także gwarancja niebywałego komfortu. Odkryj doskonałe połączenie elegancji i funkcjonalności, podkreślając swój unikalny styl na każdej imprezie czy spotkaniu.",
+                    Price = 45000,
+                    PictureUrl = "/images/products/heels.png",
+                    Brand = "Moda",
+                    Type = "Oficialnie",
+                    QuantityInStock = 100
+                },
+                		new Product
+                {
+                    Name = "Eleganckie Buty Męskie",
+                    Description =
+                        "Nasze eleganckie buty męskie to połączenie klasycznego designu z nowoczesną wygodą. Niech Twój każdy krok emanuje pewnością siebie i stylem dzięki naszym doskonale wykonanym butom.",
                     Price = 20000,
-                    PictureUrl = "/images/products/sb-ang1.png",
-                    Brand = "Angular",
-                    Type = "Boards",
+                    PictureUrl = "/images/products/elegant_shoes.png",
+                    Brand = "Moda",
+                    Type = "Oficialnie",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Green Angular Board 3000",
-                    Description = "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
+                    Name = "Krawat",
+                    Description = "Nasz krawat to nie tylko dodatek do ubrania, to wyraz indywidualności. Dostępny w różnorodnych wzorach i kolorach, pozwoli Ci wyróżnić się w tłumie, dodając szyku i klasy do Twojego looku.",
                     Price = 15000,
-                    PictureUrl = "/images/products/sb-ang2.png",
-                    Brand = "Angular",
-                    Type = "Boards",
+                    PictureUrl = "/images/products/tie.png",
+                    Brand = "Moda",
+                    Type = "Oficialnie",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Core Board Speed Rush 3",
+                    Name = "Rakieta Tenisowa",
                     Description =
-                        "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
+                        "Nasza rakieta tenisowa to idealny sprzęt dla pasjonatów tenisa. Znajdź swój rytm na korcie, korzystając z technologii i designu, które sprawią, że każdy uderzenie stanie się czystą przyjemnością.",
                     Price = 18000,
-                    PictureUrl = "/images/products/sb-core1.png",
-                    Brand = "NetCore",
-                    Type = "Boards",
+                    PictureUrl = "/images/products/Rocket.png",
+                    Brand = "Sport",
+                    Type = "Akcesoria",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Net Core Super Board",
+                    Name = "Piłka Tenisowa",
                     Description =
-                        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
+                        "Nasza piłka tenisowa to doskonały wybór dla graczy, którzy dążą do doskonałego odbicia. Zapewniając trwałość i wysoką widoczność, ta piłka stanie się nieodłącznym elementem Twoich treningów i meczów.",
                     Price = 30000,
-                    PictureUrl = "/images/products/sb-core2.png",
-                    Brand = "NetCore",
-                    Type = "Boards",
+                    PictureUrl = "/images/products/tennisball.png",
+                    Brand = "Sport",
+                    Type = "Akceoria",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "React Board Super Whizzy Fast",
+                    Name = "Smartfon",
                     Description =
-                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                        "Nasz smartfon to nie tylko urządzenie - to centrum Twojego świata. Z doskonałą jakością ekranu, długą żywotnością baterii i funkcjami inteligentnymi, zawsze będziesz krokiem do przodu w świecie technologii mobilnej.",
                     Price = 25000,
-                    PictureUrl = "/images/products/sb-react1.png",
-                    Brand = "React",
-                    Type = "Boards",
+                    PictureUrl = "/images/products/mobile.png",
+                    Brand = "Technologia",
+                    Type = "Telefon",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Typescript Entry Board",
+                    Name = "Telefon Stacjonarny",
                     Description =
-                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                        "Nasz telefon stacjonarny to idealne połączenie tradycji z nowoczesnością. Zapewniając wygodę obsługi i doskonałą jakość dźwięku, stanie się niezastąpionym narzędziem w codziennej komunikacji.",
                     Price = 12000,
-                    PictureUrl = "/images/products/sb-ts1.png",
-                    Brand = "TypeScript",
-                    Type = "Boards",
+                    PictureUrl = "/images/products/landline_phone.png",
+                    Brand = "Technologia",
+                    Type = "Telefon",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Core Blue Hat",
+                    Name = "Słuchawki Bezprzewodowe",
                     Description =
-                        "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                            "Nasze słuchawki nauszne to idealne połączenie stylu i wydajności. Bezprzewodowe, lekkie i z długim czasem pracy baterii, zapewnią Ci swobodę i komfort podczas słuchania ulubionej muzyki.",
                     Price = 1000,
-                    PictureUrl = "/images/products/hat-core1.png",
-                    Brand = "NetCore",
-                    Type = "Hats",
+                    PictureUrl = "/images/products/headphones.png",
+                    Brand = "Technologia",
+                    Type = "Słuchawki",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Green React Woolen Hat",
+                    Name = "Słuchawki Bezprzewodowe Premium",
                     Description =
-                        "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                            "Nasze słuchawki nauszne premium to synonim doskonałości. Zawierają najnowsze technologie audio, ergonomiczny design i wyjątkowe detale, by dostarczyć niezapomniane wrażenia muzyczne na najwyższym poziomie.",
                     Price = 8000,
-                    PictureUrl = "/images/products/hat-react1.png",
-                    Brand = "React",
-                    Type = "Hats",
+                    PictureUrl = "/images/products/headphones_premium.png",
+                    Brand = "Technologia",
+                    Type = "Słuchawki",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Purple React Woolen Hat",
+                    Name = "Słuchawki Przewodowe",
                     Description =
-                        "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                        "Nasze słuchawki przewodowe to klasyka wśród audio. Prosty design, solidne połączenie i klarowny dźwięk sprawiają, że są idealnym wyborem dla tych, którzy cenią niezawodność i prostotę obsługi.",
                     Price = 1500,
-                    PictureUrl = "/images/products/hat-react2.png",
-                    Brand = "React",
-                    Type = "Hats",
+                    PictureUrl = "/images/products/headphones_cable.png",
+                    Brand = "Technologia",
+                    Type = "Słuchawki",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Blue Code Gloves",
+                    Name = "Lodówka",
                     Description =
-                        "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                        "Nasze lodówki to nie tylko przechowywanie żywności - to rozwiązania, które łączą elegancję z innowacyjnością. Z najnowszymi technologiami chłodzenia, nasze lodówki sprawią, że utrzymanie świeżości produktów stanie się przyjemnością.",
                     Price = 1800,
-                    PictureUrl = "/images/products/glove-code1.png",
-                    Brand = "VS Code",
-                    Type = "Gloves",
+                    PictureUrl = "/images/products/fridge.png",
+                    Brand = "Technologia",
+                    Type = "AGD",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Green Code Gloves",
+                    Name = "Mikrofala",
                     Description =
-                        "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                        "Nasza mikrofala to nie tylko szybkość, to gwarancja równomiernego podgrzewania i smaku w każdym kęsie. Z łatwą obsługą i nowoczesnym designem, to idealny dodatek do Twojej kuchni.",
                     Price = 1500,
-                    PictureUrl = "/images/products/glove-code2.png",
-                    Brand = "VS Code",
-                    Type = "Gloves",
+                    PictureUrl = "/images/products/microwave.png",
+                    Brand = "Technologia",
+                    Type = "AGD",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Purple React Gloves",
+                    Name = "Piekarnik",
                     Description =
-                        "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                        "Nasz piekarnik to klucz do kulinarnej doskonałości w Twojej kuchni. Z precyzyjną kontrolą temperatury, funkcją konwekcji i eleganckim designem, pozwala na przygotowanie smacznych potraw na każdą okazję.",
                     Price = 1600,
-                    PictureUrl = "/images/products/glove-react1.png",
-                    Brand = "React",
-                    Type = "Gloves",
+                    PictureUrl = "/images/products/oven.png",
+                    Brand = "Technologia",
+                    Type = "AGD",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Green React Gloves",
+                    Name = "Kuchenka gazowa",
                     Description =
-                        "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-                    Price = 1400,
-                    PictureUrl = "/images/products/glove-react2.png",
-                    Brand = "React",
-                    Type = "Gloves",
-                    QuantityInStock = 100
-                },
-                new Product
-                {
-                    Name = "Redis Red Boots",
-                    Description =
-                        "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
-                    Price = 25000,
-                    PictureUrl = "/images/products/boot-redis1.png",
-                    Brand = "Redis",
-                    Type = "Boots",
-                    QuantityInStock = 100
-                },
-                new Product
-                {
-                    Name = "Core Red Boots",
-                    Description =
-                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-                    Price = 18999,
-                    PictureUrl = "/images/products/boot-core2.png",
-                    Brand = "NetCore",
-                    Type = "Boots",
-                    QuantityInStock = 100
-                },
-                new Product
-                {
-                    Name = "Core Purple Boots",
-                    Description =
-                        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
-                    Price = 19999,
-                    PictureUrl = "/images/products/boot-core1.png",
-                    Brand = "NetCore",
-                    Type = "Boots",
-                    QuantityInStock = 100
-                },
-                new Product
-                {
-                    Name = "Angular Purple Boots",
-                    Description = "Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.",
-                    Price = 15000,
-                    PictureUrl = "/images/products/boot-ang2.png",
-                    Brand = "Angular",
-                    Type = "Boots",
-                    QuantityInStock = 100
-                },
-                new Product
-                {
-                    Name = "Angular Blue Boots",
-                    Description =
-                        "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
+                        "Nasza kuchenka gazowa to doskonałe połączenie tradycji z nowoczesnością w kuchni. Z szybkim nagrzewaniem, precyzyjną kontrolą płomienia i solidną konstrukcją, zapewni wygodę gotowania na co dzień.",
                     Price = 18000,
-                    PictureUrl = "/images/products/boot-ang1.png",
-                    Brand = "Angular",
-                    Type = "Boots",
+                    PictureUrl = "/images/products/gas.png",
+                    Brand = "Technologia",
+                    Type = "AGD",
                     QuantityInStock = 100
                 },
             };
