@@ -5,6 +5,6 @@ export interface Product {
     price: number
     pictureUrl: string
     type?: string
-    brand: string
+    category: string
     quantityInStock?: number
   }
