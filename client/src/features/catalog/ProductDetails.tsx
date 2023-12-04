@@ -12,32 +12,30 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Product } from "../../app/models/product";
-import agent from "../../app/api/agent";
 import NotFound from "../../app/errors/NotFound";
 import Loading from "../../app/layout/Loading";
-import { useStoreContext } from "../../app/context/StoreContext";
 import { LoadingButton } from "@mui/lab";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import { addBasketItemAsync, deleteBasketItemAsync} from "../basket/basketSlice";
+import { getProductAsync,productSelectors } from "./catalogSlice";
 
 export default function ProductDetails() {
-  const{basket,setBasket,removeItem} =  useStoreContext()
-  const { id } = useParams<{ id: string }>();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useAppDispatch();
+  const {basket,status} = useAppSelector(state=>state.basket);
+  const {id} = useParams<{ id: string }>();
+  
+  const product = useAppSelector(state => productSelectors.selectById(state,id!)); 
+  
   const [value, setValue] = useState<number | null>(4);
+  const {status: productStatus} = useAppSelector(state=> state.catalog)
   const [quantity,setQuantity] = useState(0);
-  const [submitting,setSubmitting]= useState(false);
   const item=basket?.items.find(i=>i.productId===product?.id)
 
 
   useEffect(() => {
-    
     if(item) setQuantity(item.quantity)
-    id && agent.Catalog.details(parseInt(id))
-      .then((response) => setProduct(response))
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
-  }, [id,item]);
+    if(!product && id) dispatch(getProductAsync(parseInt(id)))
+  }, [id,item,dispatch,product]);
 
 
   function handleInput(event: any)
@@ -48,24 +46,17 @@ export default function ProductDetails() {
   }
 
   function handleUpdateCart(){
-    setSubmitting(true);
     if(!item || quantity > item.quantity){
       const newQuantity=item ? quantity - item.quantity : quantity;
-      agent.Basket.addItem(product?.id!,newQuantity)
-        .then(basket=>setBasket(basket))
-        .catch(error=>console.log(error))
-        .finally(()=>setSubmitting(false))
+      dispatch(addBasketItemAsync({productId: product?.id!,quantity: newQuantity}))
     }
     else{
       const newQuantity = item.quantity - quantity;
-      agent.Basket.deleteItem(product?.id!,newQuantity)
-        .then(()=> removeItem(product?.id!,newQuantity))
-        .catch(error=>console.log(error))
-        .finally(()=>setSubmitting(false))
+      dispatch(deleteBasketItemAsync({productId: product?.id!,quantity: newQuantity}))
     }
   }
 
-  if (loading) return <Loading message="Ładowanie Produktu" />;
+  if (productStatus.includes('pending')) return <Loading message="Ładowanie Produktu" />;
 
   if (!product) return <NotFound />;
 
@@ -143,7 +134,7 @@ export default function ProductDetails() {
             variant='contained'
             fullWidth
             onClick={handleUpdateCart}
-            loading={submitting}
+            loading={status.includes('pending')}
             disabled={item?.quantity===quantity || !item && quantity===0}
             >
               {item ? 'Zmień ilość w koszyku' : 'Dodaj do koszyka'}
