@@ -26,7 +26,6 @@ export default function ProductDetails() {
   
   const product = useAppSelector(state => productSelectors.selectById(state,id!)); 
   
-  const [value, setValue] = useState<number | null>(4);
   const {status: productStatus} = useAppSelector(state=> state.catalog)
   const [quantity,setQuantity] = useState(0);
   const item=basket?.items.find(i=>i.productId===product?.id)
@@ -105,10 +104,7 @@ export default function ProductDetails() {
                 <TableCell>
                   <Rating
                     name="simple-controlled"
-                    value={value}
-                    onChange={(_, newValue: number | null) => {
-                      setValue(newValue);
-                    }}
+                    value={product.rate}                   
                   />
                 </TableCell>
               </TableRow>

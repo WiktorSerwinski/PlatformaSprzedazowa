@@ -41,8 +41,20 @@ namespace API.Controllers
             return products;
         }
 
+        [HttpPost]
+        public async Task<ActionResult<Product>> RateProduct(int product_id, int quantity)
+        {
+            var product = await _context.Products.FindAsync(product_id);
+            
+            product.Rate=quantity;
+            
+            var result = await _context.SaveChangesAsync() > 0;
 
-        [HttpGet("{id}")]
+            return CreatedAtRoute("",product);
+
+        }
+
+        [HttpGet("{id}",Name ="Rate")]
 
         public async Task<ActionResult<Product>> GetProduct(int id)
         {

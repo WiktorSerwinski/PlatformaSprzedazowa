@@ -15,7 +15,10 @@ namespace API.Entities
         public string Type { get; set; }
         public string Category { get; set; }
         public int QuantityInStock { get; set; }
-
-        public int Rate { get; set; }
+        public int Rate { get; set; } = 0;
     }
+
+    
+
+
 }

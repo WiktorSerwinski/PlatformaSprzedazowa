@@ -16,6 +16,7 @@ namespace API.Extensions
             {
                 "lowPrice" => query.OrderBy(p => p.Price),
                 "highPrice" => query.OrderByDescending(p => p.Price),
+                "rate" => query.OrderByDescending(p=> p.Rate),                
                 _ => query.OrderBy(p => p.Name)
 
             };

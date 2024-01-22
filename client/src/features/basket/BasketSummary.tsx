@@ -10,7 +10,7 @@ export default function BasketSummary({basket}:Props) {
     if(basket)
     {
         const subtotal= basket.items.reduce((sum,item) => sum+item.price*item.quantity,0 )
-        var deliveryFee = 100000;
+        var deliveryFee = 10000;
         if((subtotal/1000)>=100) deliveryFee=0
         return (
             <>
@@ -31,7 +31,7 @@ export default function BasketSummary({basket}:Props) {
                             </TableRow>
                             <TableRow>
                                 <TableCell>
-                                    <span style={{fontStyle: 'italic',color: 'lime'}}>Opłata za dostarczenie przy zamówieniu powyżej 2000 ® wynosi 0 !!!</span>
+                                    <span style={{fontStyle: 'italic',color: 'lime'}}>Opłata za dostarczenie przy zamówieniu powyżej 1000 ® wynosi 0 !!!</span>
                                 </TableCell>
                             </TableRow>
                         </TableBody>

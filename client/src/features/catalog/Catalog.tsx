@@ -2,20 +2,25 @@ import ProductList from "./ProductList";
 import { useEffect } from "react";
 import Loading from "../../app/layout/Loading";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
-import { getProductFilters, getProductsAsync, productSelectors } from "./catalogSlice";
-import { Box, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, Pagination, Paper, Radio, RadioGroup, TextField, Typography } from "@mui/material";
+import { getProductFilters, getProductsAsync, productSelectors, setPageNumber, setProductParams } from "./catalogSlice";
+import { Grid, Paper, Typography } from "@mui/material";
+import SearchComponent from "./SearchComponent";
+import ChooseOptionComponent from "../../app/components/ChooseOptionComponent";
+import CheckButtonsComponent from "../../app/components/CheckButtonsComponent";
+import AppPagination from "../../app/components/AppPagination";
 
 const sortOptions = [
   {value: 'name' , label: 'Alfabetycznie'},
   {value: 'highPrice' , label: 'Cena Malejąca'},
-  {value: 'lowPrice' , label: 'Cena Rosnąca'}
+  {value: 'lowPrice' , label: 'Cena Rosnąca'},
+  {value: 'rate' , label: 'Ocena - Od Najwyższej'}
 ]
 
 
 export default function Catalog() {
   const products = useAppSelector(productSelectors.selectAll);
 
-  const {LoadedProducts, status,LoadedFilters,categories,types} = useAppSelector(
+  const {LoadedProducts, status,LoadedFilters,categories,types,productParams,metaData} = useAppSelector(
     (state) => state.catalog
   );
 
@@ -32,7 +37,7 @@ export default function Catalog() {
 
 
 
-  if (status.includes("pending"))
+  if (status.includes("pending" )|| !metaData)
     return <Loading message="Ładowanie Katalogu" />;
 
   return (
@@ -40,10 +45,7 @@ export default function Catalog() {
       <Grid container>
         <Grid item xs={12}>
           <Paper sx={{marginTop:1}}>
-            <TextField
-            fullWidth
-              label='Znajdz produkt'
-            />
+            <SearchComponent/>
           </Paper>                        
         </Grid>
       </Grid>
@@ -52,52 +54,43 @@ export default function Catalog() {
         <Grid container spacing={4}>
           <Grid item xs={4}>          
               <Typography variant="h4">Sortowanie</Typography>
-              <FormControl component={'fieldset'}>
-                  <RadioGroup>
-                    {sortOptions.map(({value,label})=>(
-                      <FormControlLabel value={value} control={<Radio />} label={label} />    
-                    ))}
-                  </RadioGroup>
-              </FormControl>
+              <ChooseOptionComponent 
+              selectedValue={productParams.orderBy}
+              sortOptions={sortOptions}
+              onChange={(event)=>dispatch(setProductParams({orderBy: event.target.value}))}
+              />
           </Grid>
           <Grid item xs={4}>
             <Typography variant="h4">Kategoria:</Typography>
-            <FormGroup>
-              {categories.map(category=>(
-                  <FormControlLabel control={<Checkbox />} label={category} key={category} />
-              ))}
-            </FormGroup>
+            <CheckButtonsComponent
+              items={categories}
+              checked={productParams.categories}
+              onChange={(items: string[]) => dispatch(setProductParams({categories: items}))}
+              cond={productParams.types.length>0}
+            />
+              
+            
           </Grid>
           <Grid item xs={4}>
             <Typography variant="h4">Podkategoria:</Typography>
-            <Grid>
-                <FormGroup sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
-                  {types.map(type=>(
-                      <FormControlLabel control={<Checkbox />} label={type} key={type} />
-                  ))}
-                </FormGroup>
-            </Grid>
+            <CheckButtonsComponent
+              items={types}
+              checked={productParams.types}
+              onChange={(items: string[]) => dispatch(setProductParams({types: items}))}
+              sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
+              cond={!(productParams.categories.length>0)}
+              
+            />
           </Grid>
         </Grid>
       </Paper>
 
       
       <ProductList products={products} />
-
-
-
-      <Box display='flex' justifyContent={'space-between'} alignItems={'center'}>
-        {/* <Typography>
-          Displaying 1-5 Page
-        </Typography> */}
-        <Pagination
-          color="standard"
-          size = 'large'
-          count={10}
-          page = {2}
-        />
-      </Box>
-
+      <AppPagination
+      metaData={metaData}
+      ChangePage={(pageNr: number) => dispatch (setPageNumber({pageNumber: pageNr}))}
+      />
     </>
   );
 }

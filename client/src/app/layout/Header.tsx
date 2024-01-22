@@ -2,6 +2,7 @@ import { ShoppingCart } from "@mui/icons-material";
 import { AppBar,Badge,Box,IconButton,List,ListItem,Switch, Toolbar, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { useAppSelector } from "../store/configureStore";
+import AccountMenu from "./AccountMenu";
 
 
 const midLinks=[
@@ -36,6 +37,8 @@ const navStyles=
 
 export default function Header({setDarkMode,darkMode}:Props){
     const {basket} = useAppSelector(state=>state.basket)
+    const {user} = useAppSelector(state => state.account)
+    
     const count = basket?.items.reduce((sum,item) => sum+item.quantity,0 )
     
     return(
@@ -44,7 +47,7 @@ export default function Header({setDarkMode,darkMode}:Props){
 
                 <Box sx={{display:'flex',allignItems: 'center'}}>
                     <Typography component={NavLink} to='/' variant="h6" sx={navStyles}>
-                        Platforma Sprzedażowa WIK     
+                        Platforma Sprzedażowa SerWik     
                     </Typography>
                     <Switch onChange={setDarkMode} checked={darkMode}/>
                 </Box>
@@ -71,10 +74,12 @@ export default function Header({setDarkMode,darkMode}:Props){
                             <ShoppingCart/>
                         </Badge>
                     </IconButton>
+                
 
-
-
-                    <List sx={{display: 'flex'}}>
+                    {user ? (
+                        <AccountMenu/>
+                    ): (
+                        <List sx={{display: 'flex'}}>
                         {rightLinks.map(({title,path})=>(
                             <ListItem
                             component={NavLink}
@@ -87,6 +92,7 @@ export default function Header({setDarkMode,darkMode}:Props){
                             </ListItem>
                             ))}
                     </List>
+                    )}                  
                 </Box>
                 
             </Toolbar>

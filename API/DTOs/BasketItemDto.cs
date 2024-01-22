@@ -20,5 +20,7 @@ namespace API.DTOs
         public string Category { get; set; }
 
         public int Quantity { get; set; }
+
+        public int Rate { get; set; }
     }
 }
