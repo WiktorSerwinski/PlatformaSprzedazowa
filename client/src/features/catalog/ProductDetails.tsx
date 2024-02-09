@@ -1,4 +1,5 @@
 import {
+  Button,
   Divider,
   Grid,
   Rating,
@@ -15,47 +16,70 @@ import { useParams } from "react-router-dom";
 import NotFound from "../../app/errors/NotFound";
 import Loading from "../../app/layout/Loading";
 import { LoadingButton } from "@mui/lab";
-import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
-import { addBasketItemAsync, deleteBasketItemAsync} from "../basket/basketSlice";
-import { getProductAsync,productSelectors } from "./catalogSlice";
+import { useAppDispatch, useAppSelector } from "../../app/redux/configureStore";
+import {
+  addBasketItemAsync,
+  deleteBasketItemAsync,
+} from "../basket/basketSlice";
+import { getProductAsync, productSelectors } from "./catalogSlice";
+import apiService from "../../app/api/apiService";
 
 export default function ProductDetails() {
   const dispatch = useAppDispatch();
-  const {basket,status} = useAppSelector(state=>state.basket);
-  const {id} = useParams<{ id: string }>();
-  
-  const product = useAppSelector(state => productSelectors.selectById(state,id!)); 
-  
-  const {status: productStatus} = useAppSelector(state=> state.catalog)
-  const [quantity,setQuantity] = useState(0);
-  const item=basket?.items.find(i=>i.productId===product?.id)
+  const { basket, status } = useAppSelector((state) => state.basket);
+  const { id } = useParams<{ id: string }>();
 
+  const product = useAppSelector((state) =>
+    productSelectors.selectById(state, id!)
+  );
+
+  const { status: productStatus } = useAppSelector((state) => state.catalog);
+  const [quantity, setQuantity] = useState(0);
+  const [ratingValue, setRatingValue] = useState(0);
+
+  const item = basket?.items.find((i) => i.productId === product?.id);
 
   useEffect(() => {
-    if(item) setQuantity(item.quantity)
-    if(!product && id) dispatch(getProductAsync(parseInt(id)))
-  }, [id,item,dispatch,product]);
+    if (item) setQuantity(item.quantity);
+    if (!product && id) dispatch(getProductAsync(parseInt(id)));
+  }, [id, item, dispatch, product]);
 
-
-  function handleInput(event: any)
-  {
-    if(event.target.value>=0){
-      setQuantity(event.target.value)
+  function handleRateInput(event: any) {
+    if (event.target.value >= 1 && event.target.value <= 5) {
+      setRatingValue(parseInt(event.target.value) || 0);
     }
   }
 
-  function handleUpdateCart(){
-    if(!item || quantity > item.quantity){
-      const newQuantity=item ? quantity - item.quantity : quantity;
-      dispatch(addBasketItemAsync({productId: product?.id!,quantity: newQuantity}))
+  async function handleRate() {
+    await apiService.Catalog.rate(product!.id, ratingValue);
+    if (id) dispatch(getProductAsync(parseInt(id)));
+  }
+
+  function handleInput(event: any) {
+    if (event.target.value >= 0) {
+      setQuantity(event.target.value);
     }
-    else{
+  }
+
+  function handleUpdateCart() {
+    if (!item || quantity > item.quantity) {
+      const newQuantity = item ? quantity - item.quantity : quantity;
+      dispatch(
+        addBasketItemAsync({ productId: product?.id!, quantity: newQuantity })
+      );
+    } else {
       const newQuantity = item.quantity - quantity;
-      dispatch(deleteBasketItemAsync({productId: product?.id!,quantity: newQuantity}))
+      dispatch(
+        deleteBasketItemAsync({
+          productId: product?.id!,
+          quantity: newQuantity,
+        })
+      );
     }
   }
 
-  if (productStatus.includes('pending')) return <Loading message="Ładowanie Produktu" />;
+  if (productStatus.includes("pending"))
+    return <Loading message="Ładowanie Produktu" />;
 
   if (!product) return <NotFound />;
 
@@ -102,38 +126,61 @@ export default function ProductDetails() {
                   <Typography component="legend">Ocena</Typography>
                 </TableCell>
                 <TableCell>
-                  <Rating
-                    name="simple-controlled"
-                    value={product.rate}                   
-                  />
+                  <Rating readOnly value={product.rate} />
                 </TableCell>
               </TableRow>
+              <TableRow></TableRow>
             </TableBody>
           </Table>
         </TableContainer>
-        <Grid container spacing={2} sx={{marginTop: '10px'}}>
-          <Grid item xs={6}>         
+        <Grid container spacing={2} sx={{ marginTop: "10px" }}>
+          <Grid item xs={6}>
             <TextField
-              onChange={handleInput}
-              variant='outlined'
-              type ='number'
-              label='Ilość w koszyku'
+              onChange={handleRateInput}
+              variant="outlined"
               fullWidth
-              value={quantity}
-            />                     
+              type="number"
+              label="Oceń Produkt w skali 1-5"
+              value={ratingValue}
+            />
           </Grid>
           <Grid item xs={6}>
-            <LoadingButton 
-            sx={{height: '60px'}}
-            color='success'
-            size='large'
-            variant='contained'
-            fullWidth
-            onClick={handleUpdateCart}
-            loading={status.includes('pending')}
-            disabled={item?.quantity===quantity || !item && quantity===0}
+            <Button
+              onClick={handleRate}
+              sx={{ height: "60px" }}
+              color="success"
+              size="large"
+              variant="contained"
+              fullWidth
+              disabled={ratingValue > 5 || ratingValue < 1}
             >
-              {item ? 'Zmień ilość w koszyku' : 'Dodaj do koszyka'}
+              Oceń
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              onChange={handleInput}
+              variant="outlined"
+              type="number"
+              label="Ilość w koszyku"
+              fullWidth
+              value={quantity}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <LoadingButton
+              sx={{ height: "60px" }}
+              color="success"
+              size="large"
+              variant="contained"
+              fullWidth
+              onClick={handleUpdateCart}
+              loading={status.includes("pending")}
+              disabled={
+                item?.quantity === quantity || (!item && quantity === 0)
+              }
+            >
+              {item ? "Zmień ilość w koszyku" : "Dodaj do koszyka"}
             </LoadingButton>
           </Grid>
         </Grid>

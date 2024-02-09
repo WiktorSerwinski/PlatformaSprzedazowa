@@ -10,31 +10,27 @@ import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/ReactToastify.css";
 import Loading from "./Loading";
-import { useAppDispatch } from "../store/configureStore";
+import { useAppDispatch } from "../redux/configureStore";
 import { fetchBasketAsync } from "../../features/basket/basketSlice";
 import { fetchCurrentUser } from "../../features/account/AccountSlice";
-
 
 function App() {
   // const {setBasket} = useStoreContext();
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
 
-  const initApp = useCallback(async ()=>
-  {
+  const initApp = useCallback(async () => {
     try {
       await dispatch(fetchCurrentUser());
-      await dispatch(fetchBasketAsync())
+      await dispatch(fetchBasketAsync());
     } catch (error) {
       console.log(error);
-    } 
-  },[dispatch])
+    }
+  }, [dispatch]);
 
   useEffect(() => {
-    initApp().then(()=> setLoading(false));
-    }, [initApp]);
-
-
+    initApp().then(() => setLoading(false));
+  }, [initApp]);
 
   const [darkMode, setDarkMode] = useState(false);
   const paletteType = darkMode ? "dark" : "light";
@@ -53,8 +49,8 @@ function App() {
     setDarkMode(!darkMode);
   }
 
-  if(loading) return <Loading message='Ładowanie Sklepu ...'></Loading>
-  
+  if (loading) return <Loading message="Ładowanie Sklepu ..."></Loading>;
+
   return (
     <ThemeProvider theme={theme}>
       <ToastContainer position="bottom-right" hideProgressBar theme="colored" />

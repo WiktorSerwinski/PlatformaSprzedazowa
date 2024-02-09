@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { Basket } from "../../app/models/basket";
-import agent from "../../app/api/agent";
+import apiService from "../../app/api/apiService";
 import { getCookie } from "../../app/utils/util";
 
 interface BasketState{
@@ -19,7 +19,7 @@ export const fetchBasketAsync = createAsyncThunk<Basket>(
     async(_,thunkAPI) =>
     {
         try {
-            return await agent.Basket.get();
+            return await apiService.Basket.get();
         } catch (error: any) {
             return thunkAPI.rejectWithValue({error: error.data})
         }
@@ -37,7 +37,7 @@ export const addBasketItemAsync = createAsyncThunk<Basket,{productId: number,qua
     'basket/addBasketItemAsync',
     async({productId,quantity},thunkAPI)=>{
         try {
-            return await agent.Basket.addItem(productId,quantity);
+            return await apiService.Basket.addItem(productId,quantity);
             
         } catch (error: any) {
             return thunkAPI.rejectWithValue({error: error.data})
@@ -49,7 +49,7 @@ export const deleteBasketItemAsync = createAsyncThunk<void,{productId: number,qu
     'basket/deleteBasketItemAsync',
     async({productId,quantity},thunkAPI)=>{
         try {
-            await agent.Basket.deleteItem(productId,quantity);
+            await apiService.Basket.deleteItem(productId,quantity);
             
         } catch (error: any) {
             return thunkAPI.rejectWithValue({error: error.data})
@@ -69,13 +69,6 @@ export const basketSlice = createSlice({
         clearBasket: (state) => {
             state.basket = null;
         }
-        // removeItem: (state,action) =>{
-        //     const {productId,quantity} = action.payload;
-        //     const itemIndex =  state.basket?.items.findIndex(i => i.productId === productId)
-        //     if(itemIndex===-1 || itemIndex === undefined) return;
-        //     state.basket!.items[itemIndex].quantity-=quantity;
-        //     if (state.basket?.items[itemIndex].quantity === 0) state.basket.items.splice(itemIndex,1);          
-        // }
             
     },
     extraReducers: (builder => {

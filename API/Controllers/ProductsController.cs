@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using API.Extensions;
 using API.RequestHelp;
 using System.Text.Json;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -18,10 +20,12 @@ namespace API.Controllers
     {
 
         private StoreContext _context { get; }
+        private readonly UserManager<User> _userManager;
 
-        public ProductsController(StoreContext context)
+        public ProductsController(StoreContext context,UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
 
 
         }
@@ -41,18 +45,7 @@ namespace API.Controllers
             return products;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Product>> RateProduct(int product_id, int quantity)
-        {
-            var product = await _context.Products.FindAsync(product_id);
-            
-            product.Rate=quantity;
-            
-            var result = await _context.SaveChangesAsync() > 0;
-
-            return CreatedAtRoute("",product);
-
-        }
+        
 
         [HttpGet("{id}",Name ="Rate")]
 
@@ -72,6 +65,77 @@ namespace API.Controllers
 
             return Ok( new {categories,types});
         }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult<Product>> RateProduct(int id, int rate)
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            var product = await _context.Products.FindAsync(id);
+
+            if (product == null)
+            {
+                return NotFound($"Product with ID {id} not found.");
+            }
+
+            // Sprawdź, czy użytkownik już ocenił ten produkt
+            var existingRating = await _context.Ratings
+                .FirstOrDefaultAsync(r => r.ProductId == id && r.UserId == user.Id);
+
+            if (existingRating != null)
+            {
+                // Użytkownik już ocenił ten produkt, zaktualizuj istniejącą ocenę
+                existingRating.Quantity = rate;
+            }
+            else
+            {
+                // Dodaj nową ocenę do tabeli Ratings
+                var newRating = new Rating
+                {
+                    ProductId = id,
+                    UserId = user.Id,
+                    Quantity = rate
+                };
+
+                _context.Ratings.Add(newRating);
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+
+                // Odczekaj przed kontynuacją, aby dać czas na zakończenie operacji bazodanowej
+                await Task.Delay(100);
+
+                // Pobierz najnowsze informacje o produkcie po zapisie do bazy danych
+                product = await _context.Products.FindAsync(id);
+
+                // Oblicz nową średnią ocen
+                var updatedRatings = await _context.Ratings
+                    .Where(r => r.ProductId == id)
+                    .Select(r => r.Quantity)
+                    .ToListAsync();
+
+                double updatedAverageRating = updatedRatings.Any() ? updatedRatings.Average() : 0;
+                updatedAverageRating = Math.Round(updatedAverageRating, 2);
+
+                int updatedAverageRatingInt = (int)updatedAverageRating;
+
+                product.Rate = updatedAverageRatingInt;
+
+                await _context.SaveChangesAsync();
+
+                return Ok(product);
+            }
+            catch (DbUpdateException)
+            {
+                return BadRequest("Failed to update product rating.");
+            }
+        }
+
+
+
 
 
 

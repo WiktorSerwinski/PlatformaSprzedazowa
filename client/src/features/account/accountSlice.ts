@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { User } from "../../app/models/user";
 import { FieldValues } from "react-hook-form";
-import agent from "../../app/api/agent";
-import { router } from "../../app/router/Routes";
+import apiService from "../../app/api/apiService";
+import { router } from "../../app/router/Router";
 import { toast } from "react-toastify";
 import { setBasket } from "../basket/basketSlice";
 
@@ -18,7 +18,7 @@ export const signInUser = createAsyncThunk<User,FieldValues>(
     'account/signInUser',
     async(data,thunkAPI)=>{
         try {
-            const userDto = await agent.Account.login(data);
+            const userDto = await apiService.Account.login(data);
             const {basket, ...user} = userDto;
             if(basket) thunkAPI.dispatch(setBasket(basket));
 
@@ -36,7 +36,7 @@ export const fetchCurrentUser = createAsyncThunk<User>(
     async(_,thunkAPI)=>{
         thunkAPI.dispatch(setUser(JSON.parse(localStorage.getItem('user')!)))
         try {
-            const userDto = await agent.Account.currentUser();
+            const userDto = await apiService.Account.currentUser();
             const {basket,...user} = userDto;
             if(basket) thunkAPI.dispatch(setBasket(basket)); 
             localStorage.setItem('user',JSON.stringify(user));
@@ -81,7 +81,6 @@ export const accountSlice = createSlice({
             state.user = action.payload;
         });
         builder.addMatcher(isAnyOf(signInUser.rejected),(_state,action) => {
-            // console.log(action.payload);
             throw action.payload;
         })
     })

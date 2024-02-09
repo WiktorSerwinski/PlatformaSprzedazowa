@@ -101,6 +101,16 @@ namespace API.Controllers
 
         }
 
+        [Authorize]
+        [HttpGet("savedAddress")]
+        public async Task <ActionResult<AddressUser>> GetUserSavedAddres()
+        {
+            return await _userManager.Users
+                .Where(x => x.UserName == User.Identity.Name)
+                .Select(user=> user.Address)
+                .FirstOrDefaultAsync();
+        }
+
         [Authorize(Roles = "Admin")] // Dodaj atrybut [Authorize(Roles = "Admin")] dla zabezpieczenia przed dostępem do tej akcji tylko dla użytkowników z roli "Admin".
         [HttpDelete("removeUserByEmail/{email}")]
         public async Task<ActionResult> RemoveUserByEmail(string email)

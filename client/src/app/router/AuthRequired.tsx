@@ -1,15 +1,13 @@
-import { Navigate, Outlet, useLocation } from "react-router-dom"
-import { useAppSelector } from "../store/configureStore"
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useAppSelector } from "../redux/configureStore";
 
-export default function AuthRequired (){
+export default function AuthRequired() {
+  const { user } = useAppSelector((state) => state.account);
 
-    const {user} = useAppSelector(state => state.account)
+  const location = useLocation();
 
-    const location = useLocation()
-
-    if(!user){
-        return <Navigate to ='/login' state={{from: location}}></Navigate>
-    }
-    return    <Outlet/>
-    
+  if (!user) {
+    return <Navigate to="/login" state={{ from: location }}></Navigate>;
+  }
+  return <Outlet />;
 }

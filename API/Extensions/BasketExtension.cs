@@ -4,13 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions
 {
     public static class BasketExtension
     {
         
-          public static BasketDto MapBasketToDto(this  Basket basket)
+        public static BasketDto MapBasketToDto(this  Basket basket)
         {
             return new BasketDto
             {
@@ -29,5 +30,14 @@ namespace API.Extensions
                 }).ToList()
             };
         }
+        public static IQueryable<Basket> GetBasketWithItems(this IQueryable<Basket> query, string buyerId)
+        {
+            return query.Include(item=> item.Items).ThenInclude(product => product.Product).Where(b=>b.BuyerId == buyerId);
+
+        }
+
+
+
+
     }
 }

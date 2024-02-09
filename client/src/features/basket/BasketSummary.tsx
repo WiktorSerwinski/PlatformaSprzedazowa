@@ -11,7 +11,7 @@ export default function BasketSummary({basket}:Props) {
     {
         const subtotal= basket.items.reduce((sum,item) => sum+item.price*item.quantity,0 )
         var deliveryFee = 10000;
-        if((subtotal/1000)>=100) deliveryFee=0
+        if((subtotal/100)>=1000) deliveryFee=0
         return (
             <>
                 <TableContainer component={Paper} variant={'outlined'}>

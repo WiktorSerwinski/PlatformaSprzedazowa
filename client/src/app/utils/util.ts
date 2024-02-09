@@ -3,6 +3,7 @@ export function getCookie(key: string) {
     return b ? b.pop() : "";
   }
 
-  export function showprice(price: number){
-    return (price/100).toFixed(2)+'®'
+  export function showprice(price: number | undefined){
+    if(price)return (price/100).toFixed(2)+'®'
+    return
   }

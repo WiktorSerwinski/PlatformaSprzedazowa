@@ -1,7 +1,7 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 import { Product, ProductParams } from "../../app/models/product";
-import agent from "../../app/api/agent";
-import { RootState } from "../../app/store/configureStore";
+import apiService from "../../app/api/apiService";
+import { RootState } from "../../app/redux/configureStore";
 import { MetaData } from "../../app/models/pagination";
 
 interface CatalogState{
@@ -39,7 +39,7 @@ export const getProductsAsync = createAsyncThunk<Product[],void,{state: RootStat
     async (_,thunkAPI) => {
         const params = catalogAxiosParams(thunkAPI.getState().catalog.productParams);
         try {
-            const response = await agent.Catalog.list(params)
+            const response = await apiService.Catalog.list(params)
             
              thunkAPI.dispatch(setMetaData(response.metadata))
             
@@ -54,7 +54,7 @@ export const getProductAsync = createAsyncThunk<Product,number>(
     'catalog/getProductAsync',
     async (productId,thunkAPI) => {
         try {
-            return await agent.Catalog.details(productId)
+            return await apiService.Catalog.details(productId)
         } catch (error: any) {
             return thunkAPI.rejectWithValue({error: error.data})
         }
@@ -65,7 +65,7 @@ export const getProductFilters = createAsyncThunk(
     'catalog/getFilters',
     async (_,thunkAPI)=>{
         try {
-            return await agent.Catalog.filters()
+            return await apiService.Catalog.filters()
         } catch (error:any) {
             return thunkAPI.rejectWithValue({error: error.data})
         }
