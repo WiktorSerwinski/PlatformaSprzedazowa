@@ -8,16 +8,16 @@ import "@fontsource/roboto/700.css";
 import { router } from "./app/router/Router.tsx";
 import { RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
-import { reduxStore } from "./app/redux/configureStore.ts";
+import { reduxStore } from "./app/redux/configureReduxStore.ts";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
 root.render(
-  <React.StrictMode> 
-      <Provider store={reduxStore}>
-        <RouterProvider router={router} />
-      </Provider>
+  <React.StrictMode>
+    <Provider store={reduxStore}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );

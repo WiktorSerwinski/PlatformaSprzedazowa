@@ -16,7 +16,10 @@ import { LoadingButton } from "@mui/lab";
 import BasketSummary from "./BasketSummary";
 import { showprice } from "../../app/utils/util";
 import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../app/redux/configureStore";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../app/redux/configureReduxStore";
 import { addBasketItemAsync, deleteBasketItemAsync } from "./basketSlice";
 
 export default function BasketPage() {
@@ -123,7 +126,7 @@ export default function BasketPage() {
           <BasketSummary basket={basket} />
           <Button
             component={Link}
-            to="/orderPage"
+            to="/skladanie-zamowienia"
             variant="contained"
             size="large"
             fullWidth

@@ -11,19 +11,10 @@ import {
   Typography,
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
-import { useAppSelector } from "../redux/configureStore";
+import { useAppSelector } from "../redux/configureReduxStore";
 import AccountMenu from "./AccountMenu";
 
-const midLinks = [
-  { title: "Katalog", path: "/catalog" },
-  { title: "Test", path: "/about" },
-  { title: "Doładuj Konto", path: "/accountRecharge" },
-];
 
-const rightLinks = [
-  { title: "Zaloguj", path: "/login" },
-  { title: "Rejestracja", path: "/register" },
-];
 
 interface Props {
   setDarkMode: () => void;
@@ -66,21 +57,21 @@ export default function Header({ setDarkMode, darkMode }: Props) {
 
         <Box>
           <List sx={{ display: "flex" }}>
-            {midLinks.map(({ title, path }) => (
-              <ListItem component={NavLink} to={path} key={path} sx={navStyles}>
-                {title.toUpperCase()}
+              <ListItem component={NavLink} to={"/katalog"} key={"/katalog"} sx={navStyles}>
+                KATALOG PRODUKTÓW
               </ListItem>
-            ))}
+              <ListItem component={NavLink} to={"/doladowanie-konta"} key={"/doladowanie-konta"} sx={navStyles}>
+                DOŁADUJ KONTO
+              </ListItem>      
           </List>
         </Box>
-
         <Box sx={{ display: "flex", allignItems: "center" }}>
           <IconButton size="large" edge="start" color="inherit" sx={{ mr: 2 }}>
             <Badge
               badgeContent={count}
               color="secondary"
               component={NavLink}
-              to="/basket"
+              to="/koszyk"
             >
               <ShoppingCart />
             </Badge>
@@ -90,16 +81,23 @@ export default function Header({ setDarkMode, darkMode }: Props) {
             <AccountMenu />
           ) : (
             <List sx={{ display: "flex" }}>
-              {rightLinks.map(({ title, path }) => (
+              
                 <ListItem
                   component={NavLink}
-                  to={path}
-                  key={path}
+                  to={"/logowanie"}
+                  key={"/logowanie"}
                   sx={navStyles}
                 >
-                  {title.toUpperCase()}
+                  ZALOGUJ
                 </ListItem>
-              ))}
+                <ListItem
+                  component={NavLink}
+                  to={"/rejestracja"}
+                  key={"/rejestracja"}
+                  sx={navStyles}
+                >
+                  REJESTRACJA
+                </ListItem>
             </List>
           )}
         </Box>

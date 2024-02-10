@@ -1,7 +1,10 @@
 import ProductList from "./ProductList";
 import { useEffect } from "react";
 import Loading from "../../app/layout/Loading";
-import { useAppDispatch, useAppSelector } from "../../app/redux/configureStore";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../app/redux/configureReduxStore";
 import {
   getProductFilters,
   getProductsAsync,

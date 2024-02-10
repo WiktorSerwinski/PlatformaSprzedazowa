@@ -1,5 +1,8 @@
 import { TextField, debounce } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../app/redux/configureStore";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../app/redux/configureReduxStore";
 import { setProductParams } from "./catalogSlice";
 import { useState } from "react";
 

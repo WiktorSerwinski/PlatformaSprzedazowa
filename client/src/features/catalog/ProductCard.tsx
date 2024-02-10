@@ -11,7 +11,10 @@ import {
 import { Product } from "../../app/models/product";
 import { Link } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
-import { useAppDispatch, useAppSelector } from "../../app/redux/configureStore";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../app/redux/configureReduxStore";
 import { addBasketItemAsync } from "../basket/basketSlice";
 
 interface Props {
@@ -65,7 +68,7 @@ export default function ProductCard({ product }: Props) {
           Do koszyka
         </LoadingButton>
 
-        <Button component={Link} to={`/catalog/${product.id}`} size="small">
+        <Button component={Link} to={`/katalog/${product.id}`} size="small">
           Szczegóły
         </Button>
       </CardActions>

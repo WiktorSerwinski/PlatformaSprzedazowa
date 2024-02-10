@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { router } from "../router/Router";
 import { PaginatedPage } from "../models/pagination";
-import { reduxStore } from "../redux/configureStore";
+import { reduxStore } from "../redux/configureReduxStore";
 
 const sleep = ()=> new Promise(resolve=>setTimeout(resolve,500));
 
@@ -44,7 +44,7 @@ axios.interceptors.response.use(async response=>{
             toast.error('Błąd Autoryzacji');
             break;
         case 500:
-            router.navigate('/server-error',{state:{error:data}})
+            router.navigate('/blad-serwera',{state:{error:data}})
             break;
         case 404:
             router.navigate('/not-found',{state:{error:data}})

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 import { Product, ProductParams } from "../../app/models/product";
 import apiService from "../../app/api/apiService";
-import { RootState } from "../../app/redux/configureStore";
+import { RootState } from "../../app/redux/configureReduxStore";
 import { MetaData } from "../../app/models/pagination";
 
 interface CatalogState{

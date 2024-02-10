@@ -62,7 +62,7 @@ export default function Register() {
           apiService.Account.register(data)
             .then(() => {
               toast.success("Rejestracja Udana");
-              navigate("/login");
+              navigate("/logowanie");
             })
             .catch((error) => handleAPIErrors(error))
         )}
@@ -119,7 +119,7 @@ export default function Register() {
         </LoadingButton>
         <Grid container>
           <Grid item>
-            <Link to="/login">{"Masz juz konto? Zaloguj się"}</Link>
+            <Link to="/logowanie">{"Masz juz konto? Zaloguj się"}</Link>
           </Grid>
         </Grid>
       </Box>

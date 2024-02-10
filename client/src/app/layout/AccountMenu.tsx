@@ -1,6 +1,6 @@
 import { Button, Menu, Fade, MenuItem, Typography } from "@mui/material";
-import React from "react";
-import { useAppDispatch, useAppSelector } from "../redux/configureStore";
+import React, {  } from "react";
+import { useAppDispatch, useAppSelector } from "../redux/configureReduxStore";
 import { signOut } from "../../features/account/accountSlice";
 import { showprice } from "../utils/util";
 import { clearBasket } from "../../features/basket/basketSlice";
@@ -9,6 +9,10 @@ import { Link } from "react-router-dom";
 export default function AccountMenu() {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.account);
+
+
+ 
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -28,10 +32,10 @@ export default function AccountMenu() {
         onClose={handleClose}
         TransitionComponent={Fade}
       >
-        <MenuItem component={Link} to="/profile">
+        <MenuItem component={Link} to="/profil">
           Profil
         </MenuItem>
-        <MenuItem component={Link} to="/orders">
+        <MenuItem component={Link} to="/historia-zamowien">
           {" "}
           Historia Zamówień
         </MenuItem>

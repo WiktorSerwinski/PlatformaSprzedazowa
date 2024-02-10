@@ -5,7 +5,7 @@ export default function OrderSummary() {
   return (
     <>
       <Typography variant="h6" gutterBottom>
-        Order summary
+        Podsumowanie Zamówienia 
       </Typography>
       <OrderBasket />
     </>

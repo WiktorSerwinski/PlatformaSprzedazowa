@@ -10,7 +10,7 @@ import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/ReactToastify.css";
 import Loading from "./Loading";
-import { useAppDispatch } from "../redux/configureStore";
+import { useAppDispatch } from "../redux/configureReduxStore";
 import { fetchBasketAsync } from "../../features/basket/basketSlice";
 import { fetchCurrentUser } from "../../features/account/AccountSlice";
 

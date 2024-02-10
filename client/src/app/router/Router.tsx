@@ -11,35 +11,37 @@ import Register from "../../features/account/Register";
 import AuthRequired from "./AuthRequired";
 import OrderPage from "../../features/orderCheckout/OrderPage";
 import Orders from "../../features/orders/Orders";
-import ProfilePage from "../../features/profile/ProfilePage";
 import AccountRecharge from "../../features/accountRecharge/AccountRecharge";
 import AdminPanel from "../../features/adminPanel/AdminPanel";
+import Profile from "../../features/profile/Profile";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      { path: "", element: <HomePage /> },
-      { path: "catalog", element: <Catalog /> },
-      { path: "catalog/:id", element: <ProductDetails /> },
-      { path: "basket", element: <BasketPage /> },
-      { path: "login", element: <Login /> },
-      { path: "register", element: <Register /> },
-      { path: "server-error", element: <ServerError /> },
-      { path: "not-found", element: <NotFound /> },
-      { path: "*", element: <Navigate replace to="/not-found" /> },              
-            
       {
         element: <AuthRequired />,
         children: [
-          { path: "orderPage", element: <OrderPage /> },
-          { path: "orders", element: <Orders/> },
-          { path: "profile", element: <ProfilePage/> },
-          { path: "accountRecharge", element: <AccountRecharge/> },
+          { path: "skladanie-zamowienia", element: <OrderPage /> },
+          { path: "historia-zamowien", element: <Orders/> },
+          { path: "profil", element: <Profile/> },
+          { path: "doladowanie-konta", element: <AccountRecharge/> },
         
         ],
       },
+     
+      { path: "", element: <HomePage /> },
+      { path: "katalog", element: <Catalog /> },
+      { path: "katalog/:id", element: <ProductDetails /> },
+      { path: "koszyk", element: <BasketPage /> },
+      { path: "logowanie", element: <Login /> },
+      { path: "rejestracja", element: <Register /> },
+      { path: "blad-serwera", element: <ServerError /> },
+      { path: "not-found", element: <NotFound /> },
+      { path: "*", element: <Navigate replace to="/not-found" /> },              
+            
+     
       // {
       //   element: <AuthRequired role={['Admin']} />, children: [
       //       { path: '/adminPanel', element: <AdminPanel /> },

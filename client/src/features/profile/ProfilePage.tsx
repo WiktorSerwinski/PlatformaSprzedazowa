@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { useAppSelector } from "../../app/redux/configureStore";
 import {
   Avatar,
   Paper,
@@ -12,19 +10,17 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import apiService from "../../app/api/apiService";
 import { NavLink } from "react-router-dom";
+import {User} from "../../app/models/user"
 
-export default function ProfilePage() {
-  const { user } = useAppSelector((state) => state.account);
-  const [address, setAddress] = useState<Address | null>(null);
+interface Props{
+  user: User,
+  address: Address | null
+}
 
-  useEffect(() => {
-    apiService.Account.fetchAddress()
-      .then((a) => setAddress(a))
-      .catch((error) => console.log(error));
-  }, []);
 
+export default function ProfilePage({user,address}: Props) {
+  
   return (
     <>
       <TableContainer component={Paper} sx={{ marginTop: "20px" }}>
@@ -83,7 +79,7 @@ export default function ProfilePage() {
                 <Button
                   variant="contained"
                   component={NavLink}
-                  to={"/accountRecharge"}
+                  to={"/doladowanie-konta"}
                   sx={{ marginTop: "10px", backgroundColor: "#388e3c" }}
                 >
                   Doładuj konto

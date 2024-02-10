@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import BasketSummary from "../basket/BasketSummary";
 import { showprice } from "../../app/utils/util";
-import { useAppSelector } from "../../app/redux/configureStore";
+import { useAppSelector } from "../../app/redux/configureReduxStore";
 
 export default function OrderBasket() {
   const { basket } = useAppSelector((state) => state.basket);

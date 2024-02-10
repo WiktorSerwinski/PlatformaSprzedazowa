@@ -36,8 +36,7 @@ namespace API.Services
                 claims.Add(new Claim(ClaimTypes.Role,role));
                 
             }
-            // Dodanie claima reprezentującego stan konta użytkownika
-            //  claims.Add(new Claim("AccountStatus", user.AccountStatus.ToString()));
+            
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWTSettings:TokenKey"]));
 

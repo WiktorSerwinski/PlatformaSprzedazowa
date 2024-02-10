@@ -9,7 +9,7 @@ import { Paper } from "@mui/material";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FieldValues, useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
-import { useAppDispatch } from "../../app/redux/configureStore";
+import { useAppDispatch } from "../../app/redux/configureReduxStore";
 import { signInUser } from "./AccountSlice";
 
 export default function Login() {
@@ -29,7 +29,7 @@ export default function Login() {
   async function submitForm(data: FieldValues) {
     try {
       await dispatch(signInUser(data));
-      navigate(location.state?.from || "/catalog");
+      navigate(location.state?.from || "/katalog");
     } catch (error) {
       console.log(error);
     }
@@ -88,7 +88,7 @@ export default function Login() {
         </LoadingButton>
         <Grid container>
           <Grid item>
-            <Link to="/register">{"Nie masz konta? Zarejestruj się"}</Link>
+            <Link to="/rejestracja">{"Nie masz konta? Zarejestruj się"}</Link>
           </Grid>
         </Grid>
       </Box>

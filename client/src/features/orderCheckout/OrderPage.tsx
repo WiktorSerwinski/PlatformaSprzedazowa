@@ -14,7 +14,10 @@ import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchema } from "./yupValidation";
 import apiService from "../../app/api/apiService";
-import { useAppDispatch, useAppSelector } from "../../app/redux/configureStore";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../app/redux/configureReduxStore";
 import { clearBasket } from "../basket/basketSlice";
 import { LoadingButton } from "@mui/lab";
 import { fetchCurrentUser } from "../account/accountSlice";

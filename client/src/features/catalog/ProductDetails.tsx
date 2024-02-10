@@ -16,7 +16,10 @@ import { useParams } from "react-router-dom";
 import NotFound from "../../app/errors/NotFound";
 import Loading from "../../app/layout/Loading";
 import { LoadingButton } from "@mui/lab";
-import { useAppDispatch, useAppSelector } from "../../app/redux/configureStore";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../app/redux/configureReduxStore";
 import {
   addBasketItemAsync,
   deleteBasketItemAsync,
