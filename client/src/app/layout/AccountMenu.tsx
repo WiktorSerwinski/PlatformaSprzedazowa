@@ -48,6 +48,7 @@ export default function AccountMenu() {
           Wyloguj
         </MenuItem>
       </Menu>
+      
       <Typography
         color="inherit"
         variant="h6"
@@ -55,6 +56,6 @@ export default function AccountMenu() {
       >
         Stan Konta: {showprice(user!.accountStatus)}
       </Typography>
-    </>
+      </>
   );
 }

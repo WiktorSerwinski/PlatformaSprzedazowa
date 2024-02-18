@@ -7,7 +7,7 @@ export default function NotFound()
         <Container component={Paper} sx={{height:200}}>
             <Typography gutterBottom variant='h3'> 404 NOT FOUND</Typography>
             <Divider/>
-            <Button fullWidth component={Link} to='/catalog'> Go back to shop</Button>
+            <Button fullWidth component={Link} to='/katalog'>Powrót do sklepu</Button>
         </Container>
 
     )

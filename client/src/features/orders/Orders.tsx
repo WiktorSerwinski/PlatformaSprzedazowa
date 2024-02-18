@@ -13,18 +13,19 @@ import apiService from "../../app/api/apiService";
 import Loading from "../../app/layout/Loading";
 import { showprice } from "../../app/utils/util";
 import OrderDetails from "./OrderDetails";
+import { useAppSelector } from "../../app/redux/configureReduxStore";
 
 export default function Orders() {
   const [orders, setOrders] = useState<Order[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [details, setDetails] = useState(0);
-
+  const { user } = useAppSelector((state) => state.account);
   useEffect(() => {
     apiService.Orders.list()
       .then((orders) => setOrders(orders))
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
-  }, []);
+  }, [orders]);
 
   if (loading) return <Loading message="Ładowanie Listy Zamówień" />;
   if (details == 0)
@@ -59,6 +60,13 @@ export default function Orders() {
                     <Button onClick={() => setDetails(order.id)}>
                       Szczegóły
                     </Button>
+                    {user?.roles?.includes("Admin") ? (
+                      <Button onClick={async () => {await apiService.Admin.changeorderStatus(order.id) }}>
+                        Potwierdz
+                      </Button>
+                    ) : (
+                      <></>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}

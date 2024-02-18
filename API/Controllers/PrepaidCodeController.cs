@@ -25,6 +25,11 @@ namespace API.Controllers
         {
             // Haszowanie kodu przy użyciu SHA256
             string hashedCode = HashCodeSHA256(codeValue);
+             // Sprawdzenie, czy kod już istnieje w bazie danych
+            if (_context.PrepaidCodes.Any(pc => pc.CodeValue == hashedCode))
+            {
+                return BadRequest("Code already exists");
+            }
 
             var prepCode = new PrepaidCode
             {

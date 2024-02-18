@@ -25,9 +25,13 @@ namespace API.Controllers
         }
 
         [HttpGet]
-
         public async Task<ActionResult<List<OrderDto>>> GetOrders()
         {
+            if(User.Identity.Name=="admin")
+            return await _storeContext.Orders
+                .MapToOrderDto()
+                .ToListAsync();
+            else    
             return await _storeContext.Orders
                 .MapToOrderDto()
                 .Where(x => x.BuyerId == User.Identity.Name)
@@ -37,6 +41,11 @@ namespace API.Controllers
         [HttpGet("{id}", Name = "GetOrder")]
         public async Task<ActionResult<OrderDto>> GetOrder(int id)
         {
+             if(User.Identity.Name=="admin")
+                return await _storeContext.Orders
+                .MapToOrderDto()
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
             return await _storeContext.Orders
                 .MapToOrderDto()
                 .Where(x => x.BuyerId == User.Identity.Name && x.Id == id)
@@ -69,9 +78,10 @@ namespace API.Controllers
                     Quantity = item.Quantity
                 };
                 items.Add(orderedItem);
-
+                if(productItem.QuantityInStock>=item.Quantity)
                 productItem.QuantityInStock -= item.Quantity;
-
+                else 
+                return BadRequest("Creating order failed!");
             }
 
             var subtotal = items.Sum(item => item.Price * item.Quantity);

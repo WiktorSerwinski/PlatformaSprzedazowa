@@ -139,7 +139,6 @@ namespace API.Data.Migrations
 
                     b.Property<string>("CodeValue")
                         .IsRequired()
-                        .HasMaxLength(6)
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsUsed")
@@ -147,7 +146,7 @@ namespace API.Data.Migrations
 
                     b.HasKey("CodeId");
 
-                    b.ToTable("PrepaidCodes", (string)null);
+                    b.ToTable("PrepaidCodes");
                 });
 
             modelBuilder.Entity("API.Entities.Product", b =>
@@ -157,6 +156,9 @@ namespace API.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Category")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CloudId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")

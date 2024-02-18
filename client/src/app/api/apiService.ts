@@ -6,7 +6,7 @@ import { reduxStore } from "../redux/configureReduxStore";
 
 const sleep = ()=> new Promise(resolve=>setTimeout(resolve,500));
 
-axios.defaults.baseURL='http://localhost:5000/api/'
+axios.defaults.baseURL= import.meta.env.VITE_API_URL;
 axios.defaults.withCredentials=true
 
 const responseBody=(response: AxiosResponse)=>response.data;
@@ -18,7 +18,7 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(async response=>{
-    await sleep();
+    if(import.meta.env.DEV)await sleep();
     const pagination = response.headers['pagination'];
     if(pagination){
         response.data = new PaginatedPage(response.data,JSON.parse(pagination));
@@ -49,6 +49,9 @@ axios.interceptors.response.use(async response=>{
         case 404:
             router.navigate('/not-found',{state:{error:data}})
             break;
+        case 403:
+            toast.error("Potrzebne uprawnienia administratora")
+            break;
         default:
             break;
         }
@@ -62,14 +65,31 @@ const requests={
     post: (url: string, body:object)=> axios.post(url,body).then(responseBody),
     put: (url: string, body: object)=> axios.put(url,body).then(responseBody),
     delete: (url: string)=> axios.delete(url).then(responseBody),
+    
 
+}
+const formRequests={
+    postForm: (url: string, data: FormData) => axios.post(url, data, {
+        headers: {'Content-type': 'multipart/form-data'}
+    }).then(responseBody),
+    putForm: (url: string, data: FormData) => axios.put(url, data, {
+        headers: {'Content-type': 'multipart/form-data'}
+    }).then(responseBody)
+}
+function createFormData(item: any) {
+    const formData = new FormData();
+    for (const key in item) {
+        formData.append(key, item[key])
+    }
+    return formData;
 }
 
 const Catalog = {
     list: (params: URLSearchParams) => requests.get("products",params),
+    all: () => requests.get("products/allproducts"),
     details: (id: number) => requests.get(`products/${id}`),
     filters: () => requests.get('products/filters'),
-    rate: (id: number, rate: number) => requests.post(`products?id=${id}&rate=${rate}`,{})
+    rate: (id: number, rate: number) => requests.post(`products/rateProduct?id=${id}&rate=${rate}`,{})
 }
 
 const TestErrors= {
@@ -102,6 +122,13 @@ const Orders = {
 const Recharge = {
     use: (codeWritten: string) => requests.post(`prepaidCode/usePrepCode?codeWritten=${codeWritten}`,{})
 }
+const Admin = {
+    createProduct: (product: any) => formRequests.postForm('products/createProduct', createFormData(product)),
+    updateProduct: (product: any,id: number) => formRequests.putForm(`products/editProduct?id=${id}`, createFormData(product)),
+    deleteProduct: (id: number) => requests.delete(`products/deleteProduct?id=${id}`),
+    createPrepCode: (amount:number,codeValue: string) => requests.post(`prepaidCode/generatePrepaidCode?amount=${amount}&codeValue=${codeValue}`,{}),
+    changeorderStatus: (id: number) => requests.put(`orders/${id}/status`,{})
+}
 
 
 const apiService={
@@ -110,7 +137,8 @@ const apiService={
     Basket,
     Account,
     Orders,
-    Recharge
+    Recharge,
+    Admin
 }
 
 

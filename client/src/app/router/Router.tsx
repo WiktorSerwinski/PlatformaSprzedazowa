@@ -12,26 +12,34 @@ import AuthRequired from "./AuthRequired";
 import OrderPage from "../../features/orderCheckout/OrderPage";
 import Orders from "../../features/orders/Orders";
 import AccountRecharge from "../../features/accountRecharge/AccountRecharge";
-import AdminPanel from "../../features/adminPanel/AdminPanel";
 import Profile from "../../features/profile/Profile";
+import AdminCatalog from "../../features/adminPanel/AdminCatalog";
+import CreateRechargeCode from "../../features/adminPanel/CreateRechargeCode";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      
       {
         element: <AuthRequired />,
         children: [
           { path: "skladanie-zamowienia", element: <OrderPage /> },
-          { path: "historia-zamowien", element: <Orders/> },
-          { path: "profil", element: <Profile/> },
-          { path: "doladowanie-konta", element: <AccountRecharge/> },
-        
+          { path: "historia-zamowien", element: <Orders /> },
+          { path: "profil", element: <Profile /> },
+          { path: "doladowanie-konta", element: <AccountRecharge /> },
         ],
       },
-     
-      { path: "", element: <HomePage /> },
+      {
+        element: <AuthRequired roles={["Admin"]} />,
+        children: [
+          { path: "edycja-katalogu", element: <AdminCatalog /> },
+          { path: "tworzenie-kodu-doładowania", element: <CreateRechargeCode /> },
+          { path: "potwierdzanie-zamówień", element:  <Orders/> },
+        ],
+      },
+      { path: "", element: <HomePage/> },
       { path: "katalog", element: <Catalog /> },
       { path: "katalog/:id", element: <ProductDetails /> },
       { path: "koszyk", element: <BasketPage /> },
@@ -39,14 +47,9 @@ export const router = createBrowserRouter([
       { path: "rejestracja", element: <Register /> },
       { path: "blad-serwera", element: <ServerError /> },
       { path: "not-found", element: <NotFound /> },
-      { path: "*", element: <Navigate replace to="/not-found" /> },              
-            
-     
-      // {
-      //   element: <AuthRequired role={['Admin']} />, children: [
-      //       { path: '/adminPanel', element: <AdminPanel /> },
-      //   ]
-      // },      
+      { path: "*", element: <Navigate replace to="/not-found" /> },
+
+      
     ],
   },
 ]);

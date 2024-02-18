@@ -111,7 +111,7 @@ namespace API.Controllers
                 .FirstOrDefaultAsync();
         }
 
-        [Authorize(Roles = "Admin")] // Dodaj atrybut [Authorize(Roles = "Admin")] dla zabezpieczenia przed dostępem do tej akcji tylko dla użytkowników z roli "Admin".
+        [Authorize(Roles = "Admin")] 
         [HttpDelete("removeUserByEmail/{email}")]
         public async Task<ActionResult> RemoveUserByEmail(string email)
         {
@@ -142,40 +142,6 @@ namespace API.Controllers
                 // Obsługa błędów, logowanie itp.
                 return StatusCode(500, $"Wystąpił błąd podczas usuwania użytkownika: {ex.Message}");
             }
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpDelete("removeUserByUsername/{username}")]
-        public async Task<ActionResult> RemoveUserByUsername(string username)
-        {
-            try
-            {
-                var user = await _userManager.FindByNameAsync(username);
-
-                if (user == null)
-                {
-                    return NotFound($"Nie znaleziono użytkownika o nazwie użytkownika: {username}");
-                }
-
-                var result = await _userManager.DeleteAsync(user);
-
-                if (!result.Succeeded)
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(error.Code, error.Description);
-                    }
-                    return ValidationProblem();
-                }
-
-                return Ok($"Użytkownik o nazwie użytkownika {username} został pomyślnie usunięty.");
-            }
-            catch (Exception ex)
-            {
-                // Obsługa błędów, logowanie itp.
-                return StatusCode(500, $"Wystąpił błąd podczas usuwania użytkownika: {ex.Message}");
-            }
-        }
-        
+        }     
     }
 }

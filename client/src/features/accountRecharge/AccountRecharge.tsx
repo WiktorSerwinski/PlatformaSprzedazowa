@@ -24,6 +24,7 @@ export default function AccountRecharge() {
         console.log(responseMessage);
       }
     } catch (error) {
+      console.log(responseMessage);
       console.log(error)
     }
   };

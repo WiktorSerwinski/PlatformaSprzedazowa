@@ -16,6 +16,8 @@ namespace API.Entities
         public string Category { get; set; }
         public int QuantityInStock { get; set; }
         public int Rate { get; set; } = 0;
+
+        public string CloudId { get;set;}
     }
 
     

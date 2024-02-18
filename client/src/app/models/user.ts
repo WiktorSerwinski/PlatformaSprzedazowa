@@ -4,5 +4,6 @@ export interface User {
     email: string,
     token: string,
     accountStatus: number,
-    basket?: Basket
+    basket?: Basket,
+    roles?: string[]
   }

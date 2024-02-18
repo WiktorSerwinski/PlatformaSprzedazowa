@@ -14,8 +14,6 @@ import { NavLink } from "react-router-dom";
 import { useAppSelector } from "../redux/configureReduxStore";
 import AccountMenu from "./AccountMenu";
 
-
-
 interface Props {
   setDarkMode: () => void;
   darkMode: boolean;
@@ -50,21 +48,59 @@ export default function Header({ setDarkMode, darkMode }: Props) {
       >
         <Box sx={{ display: "flex", allignItems: "center" }}>
           <Typography component={NavLink} to="/" variant="h6" sx={navStyles}>
-            Platforma Sprzedażowa SerWik
+            Platforma Sprzedażowa
           </Typography>
           <Switch onChange={setDarkMode} checked={darkMode} />
         </Box>
-
-        <Box>
-          <List sx={{ display: "flex" }}>
-              <ListItem component={NavLink} to={"/katalog"} key={"/katalog"} sx={navStyles}>
-                KATALOG PRODUKTÓW
+        {user?.roles?.includes("Admin") ? (
+          <Box>
+            <List sx={{ display: "flex" }}>
+              <ListItem
+                component={NavLink}
+                to={"/edycja-katalogu"}
+                key={"/edycja-katalogu"}
+                sx={navStyles}
+              >
+                EDYTUJ KATALOG
               </ListItem>
-              <ListItem component={NavLink} to={"/doladowanie-konta"} key={"/doladowanie-konta"} sx={navStyles}>
+              <ListItem
+                component={NavLink}
+                to={"/tworzenie-kodu-doładowania"}
+                key={"/tworzenie-kodu-doładowania"}
+                sx={navStyles}
+              >
+                DODAJ KOD
+              </ListItem>
+              <ListItem
+                component={NavLink}
+                to={"/potwierdzanie-zamówień"}
+                key={"/potwierdzanie-zamówień"}
+                sx={navStyles}
+              >
+                POTWIERDZ ZAMÓWIENIA
+              </ListItem>
+            </List>
+          </Box>
+        ) : (
+          <Box>
+            <List sx={{ display: "flex" }}>
+              <ListItem
+                component={NavLink}
+                to={"/katalog"}
+                key={"/katalog"}
+                sx={navStyles}
+              >KATALOG</ListItem>
+              <ListItem
+                component={NavLink}
+                to={"/doladowanie-konta"}
+                key={"/doladowanie-konta"}
+                sx={navStyles}
+              >
                 DOŁADUJ KONTO
-              </ListItem>      
-          </List>
-        </Box>
+              </ListItem>
+            </List>
+          </Box>
+        )}
         <Box sx={{ display: "flex", allignItems: "center" }}>
           <IconButton size="large" edge="start" color="inherit" sx={{ mr: 2 }}>
             <Badge
@@ -81,23 +117,22 @@ export default function Header({ setDarkMode, darkMode }: Props) {
             <AccountMenu />
           ) : (
             <List sx={{ display: "flex" }}>
-              
-                <ListItem
-                  component={NavLink}
-                  to={"/logowanie"}
-                  key={"/logowanie"}
-                  sx={navStyles}
-                >
-                  ZALOGUJ
-                </ListItem>
-                <ListItem
-                  component={NavLink}
-                  to={"/rejestracja"}
-                  key={"/rejestracja"}
-                  sx={navStyles}
-                >
-                  REJESTRACJA
-                </ListItem>
+              <ListItem
+                component={NavLink}
+                to={"/logowanie"}
+                key={"/logowanie"}
+                sx={navStyles}
+              >
+                ZALOGUJ
+              </ListItem>
+              <ListItem
+                component={NavLink}
+                to={"/rejestracja"}
+                key={"/rejestracja"}
+                sx={navStyles}
+              >
+                REJESTRACJA
+              </ListItem>
             </List>
           )}
         </Box>

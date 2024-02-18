@@ -10,7 +10,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FieldValues, useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import { useAppDispatch } from "../../app/redux/configureReduxStore";
-import { signInUser } from "./AccountSlice";
+import { signInUser } from "./accountSlice";
 
 export default function Login() {
   const navigate = useNavigate();
